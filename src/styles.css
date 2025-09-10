@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+/* En resumen, estan los archivos globales  */  
+:root {
+        --bg-nav: oklch(.4413 .2031 311.18);
+        --bg-titles: oklch(.7234 .1878 49.51);
+        --white: oklab(1 0 0);
+        --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        --text: oklab(.25 0 0);
+        --primary: oklab(.6 .25 -.1);
+        --primary-dark: oklab(.45 .25 -.1);
+        --border: oklch(.4413 .2031 311.18);
+        --muted: oklab(0 0 0);
+        --bg-footer: oklch(.7234 .1878 49.51)
+    }
+
+    body {
+        /* font-size: 16px; */
+        background-color: var(--white);
+        display: flex;
+        flex-direction:column
+    }
+
+     html, body {
+        height:100%
+    }
+
+    ol, ul {
+        list-style:none
+    }
+
+    li {
+        display: block;
+        padding-left: 1.2rem;
+        margin:.25rem .5rem
+    }
