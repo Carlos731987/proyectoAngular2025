@@ -1,9 +1,126 @@
 
 
 main {
-    background-color: var(--primary);
+    background-color: rgb(237, 186, 110);
 }
 
 h1 {
     text-align: center;
+}
+/* Estilos para Redes Sociales */
+.redes-sociales {
+  text-align: center;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.redes-sociales h3 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 1.2em;
+}
+
+.redes-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.red-social {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.red-social:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* Facebook - Azul */
+.facebook {
+  background: #1877f2;
+}
+
+.facebook:hover {
+  background: #166fe5;
+}
+
+/* Instagram - Gradiente morado/naranja */
+.instagram {
+  background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+}
+
+.instagram:hover {
+  background: linear-gradient(45deg, #374bc4, #4a44c0, #723299, #a82a71, #c2285d, #e01a1a);
+}
+
+/* TikTok - Negro con rojo */
+.tiktok {
+  background: #000000;
+  position: relative;
+}
+
+.tiktok::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ff0050, #00f2ea);
+}
+
+.tiktok:hover {
+  background: #111111;
+}
+
+/* Iconos Font Awesome */
+.red-social i {
+  font-size: 1.1em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .redes-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .red-social {
+    width: 200px;
+    justify-content: center;
+  }
+}
+.whatsapp-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.whatsapp-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background-color: #25D366;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.whatsapp-link:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }

@@ -11,3 +11,4 @@ import { FooterComponent } from '../footer/footer.component';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {}
+
