@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-promociones',
-  standalone: true,
-  imports: [],
   templateUrl: './promociones.component.html',
-  styleUrl: './promociones.component.css'
+  styleUrls: ['./promociones.component.css']
 })
-export class PromocionesComponent {
+export class PromocionesComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
 
 }
