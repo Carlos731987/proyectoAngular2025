@@ -1,0 +1,32 @@
+.somos-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.somos-container h1 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.somos-container h2 {
+  color: #555;
+  margin-top: 30px;
+}
+
+.contenido-somos {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.contenido-somos ul {
+  margin-left: 20px;
+}
+
+.contenido-somos li {
+  margin-bottom: 8px;
+}
