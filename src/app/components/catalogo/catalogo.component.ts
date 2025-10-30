@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-catalogo',
-  standalone: true,
-  imports: [],
   templateUrl: './catalogo.component.html',
-  styleUrl: './catalogo.component.css'
+  styleUrls: ['./catalogo.component.css']
 })
-export class CatalogoComponent {
+export class CatalogoComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
 
 }
