@@ -1,5 +1,5 @@
 <div class="registro-container">
-  <h2>Crea tu cuenta</h2>
+  <h2>Crea tu cuenta en ShoeStore</h2>
   <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
 
     <div class="form-row">
@@ -13,12 +13,14 @@
       </div>
       <div class="form-group">
         <label for="apellido">Apellido:</label>
+        <!-- Vista previa de TitleCase Pipe (Excelente detalle de UX) -->
         <p *ngIf="form['nombre'].valid" class="title-case-preview">
           Hola, {{ form['nombre'].value | titleCase }}
         </p>
         <input id="apellido" type="text" formControlName="apellido" placeholder="Tu apellido">
         <div *ngIf="form['apellido'].invalid && form['apellido'].touched" class="error-message">
           <span *ngIf="form['apellido'].errors?.['required']">El apellido es obligatorio.</span>
+          <span *ngIf="form['apellido'].errors?.['minlength']">Mínimo 2 caracteres.</span>
         </div>
       </div>
     </div>
@@ -55,6 +57,7 @@
       <input id="confirmarContrasena" type="password" formControlName="confirmarContrasena" placeholder="Repite la contraseña">
       <div *ngIf="form['confirmarContrasena'].touched && form['confirmarContrasena'].errors" class="error-message">
         <span *ngIf="form['confirmarContrasena'].errors?.['required']">Debe confirmar la contraseña.</span>
+        <!-- Muestra el error de validación cruzada -->
         <span *ngIf="registroForm.errors?.['passwordsMismatch'] && form['confirmarContrasena'].touched">Las contraseñas no coinciden.</span>
       </div>
     </div>
@@ -67,6 +70,9 @@
       </div>
     </div>
 
+    <!-- Muestra el error del servidor (Firebase) -->
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
     <button type="submit" 
             [disabled]="registroForm.invalid" 
             [ngClass]="{'btn-submit': true, 'btn-disabled': registroForm.invalid}">
@@ -76,5 +82,9 @@
 
   <p class="footer-info">
     Formulario activado desde: {{ fechaRegistro | date:'mediumDate' }}
+  </p>
+  
+  <p class="login-link">
+    ¿Ya tienes cuenta? <a [routerLink]="['/login']">Inicia sesión aquí.</a>
   </p>
 </div>
