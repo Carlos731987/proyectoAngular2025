@@ -14,6 +14,7 @@ import {
   signInWithEmailAndPassword
 } from 'firebase/auth';
 import { initializeApp, FirebaseApp } from 'firebase/app';
+import { environment } from '../../environments/environment';
 
 // --- CONFIGURACIÓN E INICIALIZACIÓN DE FIREBASE (FUERA DE LA CLASE) ---
 
@@ -21,37 +22,61 @@ import { initializeApp, FirebaseApp } from 'firebase/app';
 declare const __firebase_config: string;
 declare const __initial_auth_token: string;
 
-const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+// const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+// const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
 let firebaseApp: FirebaseApp | undefined;
 let firebaseAuth: Auth | undefined;
 
+/**
+ * Determina qué configuración de Firebase usar: Plataforma (Deploy) o Local (environment.ts).
+ */
+const getFinalFirebaseConfig = () => {
+  // 1. PRIORIDAD: Variables Globales de la Plataforma (para el deploy a Firebase Hosting)
+  const firebaseConfigPlatform = typeof __firebase_config !== 'undefined'? JSON.parse(__firebase_config): null;
+
+  if (firebaseConfigPlatform) {
+    console.log("Usando credenciales de Firebase Hosting (Entorno de Deploy).");
+    return firebaseConfigPlatform;
+  }
+
+  // 2. FALLBACK: Configuración del Archivo de Entorno (para desarrollo local con ng serve)
+  if (environment.firebase) {
+    console.warn("Configuración de Firebase usando environment.ts (Entorno Local).");
+    return environment.firebase;
+  }
+  // 3. Ninguna configuración disponible
+  return null;
+};
+
+const firebaseConfigFinal = getFinalFirebaseConfig();
+
 try {
-  if (firebaseConfig) {    
-    firebaseApp = initializeApp(firebaseConfig);
+  if (firebaseConfigFinal) {
+    firebaseApp = initializeApp(firebaseConfigFinal);
     firebaseAuth = getAuth(firebaseApp);
 
-    // 2. Proceso de autenticación inicial asíncrona
-    const authInstance = firebaseAuth; // Usar una constante local para claridad
-    
-    // Función para manejar el inicio de sesión
-    const handleAuth = async () => {
-      if (initialAuthToken) {
-        try {
-          await signInWithCustomToken(authInstance, initialAuthToken);
-        } catch (e) {
-          console.warn("Fallo en Custom Token. Intentando anónimamente.", e);
-          await signInAnonymously(authInstance);
-        }
-      } else {
-        await signInAnonymously(authInstance);
-      }
-    };
-    handleAuth().catch(err => console.error("Error en la autenticación inicial:", err));
+    // Proceso de autenticación inicial asíncrona (usando custom token o anónimo)
+    // const handleAuth = async (authInstance: Auth) => {
+    //   const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+    //   if (initialAuthToken) {
+    //     try {
+    //       await signInWithCustomToken(authInstance, initialAuthToken);
+    //     } catch (e) {
+    //       console.warn("Fallo en Custom Token. Intentando anónimamente.", e);
+    //       await signInAnonymously(authInstance);
+    //     }
+    //   } else {
+    //     await signInAnonymously(authInstance);
+    //   }
+    // };
+    // // Llamamos a la función handleAuth solo si firebaseAuth está definido
+    // if (firebaseAuth) {
+    //   handleAuth(firebaseAuth).catch(err => console.error("Error en la autenticación inicial:", err));
+    // }
 
   } else {
-    console.warn("Configuración de Firebase no disponible. La autenticación estará inactiva en el entorno local.");
+    console.warn("No se encontró configuración de Firebase. La autenticación estará inactiva.");
   }
 } catch (e) {
   console.error("Fallo al inicializar Firebase:", e);
@@ -91,7 +116,7 @@ export class AuthService {
         }
       });
     } else {
-      // Si FirebaseAuth no existe (fallo en local), establecemos el estado final inmediatamente
+      // Si FirebaseAuth no existe (fallo en local sin configuración), establecemos el estado final inmediatamente
       this._currentUser.set(null);
       this.loading.set(false);
     }

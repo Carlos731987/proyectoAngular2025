@@ -1,4 +1,4 @@
-import { inject, Injector } from '@angular/core'; // Agregamos Injector para toObservable
+import { inject, Injector } from '@angular/core'; 
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import { map, take } from 'rxjs';
 import { AuthService } from '../services/auth.service';

@@ -1,0 +1,87 @@
+/* 1. Tipografía Global */
+    :host {
+      font-family: 'Georgia', 'Times New Roman', serif;
+    }
+    .title-font {
+        font-family: 'Verdana', sans-serif;
+    }
+
+    /* 2. Contenedor Principal (Fondo Vivo) */
+    .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* AJUSTE CLAVE: Reducimos el min-height y el padding vertical */
+      min-height: calc(100vh - 4.8rem); 
+      background: linear-gradient(145deg, #1f2937 0%, #000000 100%); 
+      padding: 1rem 0; /* REDUCCIÓN DEL PADDING VERTICAL */
+    }
+    
+    /* 3. Tarjeta del Formulario (Contraste Fuerte) */
+    .form-card {
+      background-color: #ffffff; 
+      padding: 3rem;
+      border-radius: 1rem; 
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+      max-width: 450px; 
+      width: 100%;
+      border: 2px solid #e67e22; 
+      transform: translateY(-5px); 
+      transition: all 0.3s ease-in-out;
+    }
+    
+    /* 4. Estilos de Formulario */
+    .label-style {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #374151; 
+        margin-bottom: 0.25rem;
+    }
+    
+    .input-style {
+        width: 100%;
+        padding: 0.65rem 1rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .input-style:focus {
+        border-color: #e67e22; 
+        box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2);
+        outline: none;
+    }
+
+    /* 5. Botón de Enviar (Fuerte Contraste) */
+    .submit-button {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: white;
+      background-color: #e67e22;
+      transition: background-color 0.3s, transform 0.2s;
+      box-shadow: 0 4px 6px -1px rgba(230, 126, 34, 0.3);
+    }
+    .submit-button:hover:not(:disabled) {
+        background-color: #d35400; 
+        transform: translateY(-1px);
+    }
+    .submit-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    
+    /* 6. Mensajes de Error */
+    .error-message {
+        color: #ef4444; 
+        font-weight: 600;
+        text-align: center;
+        background-color: #fee2e2;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid #fca5a5;
+    }

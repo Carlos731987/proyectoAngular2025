@@ -8,8 +8,8 @@ import { routes } from './app.routes';
 // --- Importaciones de Firebase y Formularios ---
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth'; 
-import { environment } from '../environments/environment'; // <-- Importación corregida
-import { ReactiveFormsModule } from '@angular/forms'; // <-- Importación corregida: Usamos la clase del módulo
+import { environment } from '../environments/environment'; // Importación correcta
+import { ReactiveFormsModule } from '@angular/forms'; // Usamos la clase del módulo
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,8 +19,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(), 
 
     // --- Firebase & Autenticación ---
-    // 💡 SOLUCIÓN ERROR DE AMBIENTE: Usamos la función initializeApp DENTRO de provideFirebaseApp
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    // 💡 SOLUCIÓN: Usar environment.firebase, ya que ese es el nombre de la propiedad en environment.ts
+    provideFirebaseApp(() => initializeApp(environment.firebase)), 
     provideAuth(() => getAuth()),
 
     // 💡 SOLUCIÓN ERROR DE FORMS: Usamos importProvidersFrom con el módulo clásico

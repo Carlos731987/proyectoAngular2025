@@ -1,17 +1,71 @@
 <nav class="navbar">
   <div class="nav-container">
+    <!-- Logo y Título -->
     <div class="nav-logo">
-      <div class="logo-container">
-        <img src="assets/Logo.png" alt="Logo Importaciones Brisa y Denis" class="logo-img">
+      <a [routerLink]="['/']" class="logo-container">
+        <img
+          class="logo-img"
+          src="assets/Logo.png"
+          alt="Logo Importaciones"
+          onerror="this.onerror=null;this.src='https://placehold.co/75x75/f8d28a/000000?text=B%26D'"
+        />
         <h2>IMPORTACIONES BRISA Y DENIS</h2>
+      </a>
+    </div>
+
+    <!-- Menú Principal (Escritorio - Ahora Único) -->
+    <div class="nav-menu">
+      <!-- Enlaces Comunes -->
+      <a
+        routerLink="/"
+        [routerLinkActive]="['active-link']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link"
+        >INICIO</a
+      >
+      <a
+        routerLink="/catalogo"
+        [routerLinkActive]="['active-link']"
+        class="nav-link"
+        >CATALOGO</a
+      >
+      <a
+        routerLink="/promociones"
+        [routerLinkActive]="['active-link']"
+        class="nav-link"
+        >PROMOCIONES</a
+      >
+      <a
+        routerLink="/somos"
+        [routerLinkActive]="['active-link']"
+        class="nav-link"
+        >SOMOS</a
+      >
+
+      <!-- Contenedor de Saludo y Botón -->
+      <div class="auth-section">
+        <!-- Sección de Saludo (Visible solo si está logueado) -->
+        
+        <!-- Botón de Autenticación DUAL -->
+        @if (authService.isAuthenticated()) {
+          <button (click)="logout()" class="nav-link last-child-style">
+            CERRAR SESIÓN
+          </button>
+          
+          @if (authService.isAuthenticated()) {
+          <span class="auth-greeting">
+            Hola, {{ authService.currentUser()?.displayName ?? "" | titleCase }}
+          </span>
+          }
+        } @else {
+        <a
+          routerLink="/registrate"
+          [routerLinkActive]="['active-link']"
+          class="nav-link last-child-style"
+          >REGÍSTRATE / LOGIN</a
+        >
+        }
       </div>
     </div>
-    <div class="nav-menu">
-       <a routerLink="/" class="nav-link">INICIO</a>
-      <a routerLink="/catalogo" class="nav-link">CATALOGO</a>
-      <a routerLink="/promociones" class="nav-link">PROMOCIONES</a>
-      <a routerLink="/somos" class="nav-link">SOMOS</a>
-      <a routerLink="/registrate" class="nav-link">REGISTRATE</a>
-</div>
   </div>
 </nav>

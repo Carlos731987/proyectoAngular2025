@@ -32,7 +32,9 @@ export class CheckInComponent implements OnInit {
       contrasena: ['', [Validators.required, Validators.minLength(6)]],
       confirmarContrasena: ['', [Validators.required]],
       aceptaTerminos: [false, Validators.requiredTrue]
-    }, {      
+    }, {
+      // Usamos una función arrow para mantener el contexto 'this' si es necesario, 
+      // aunque AbstractControl funciona como control principal
       validator: this.passwordsMatchValidator 
     });
   }

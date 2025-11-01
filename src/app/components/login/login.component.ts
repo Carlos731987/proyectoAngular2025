@@ -1,58 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service'; // Asegúrate de que la ruta es correcta
-import { CommonModule } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
+import { CommonModule, NgClass } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, NgClass],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
-  loginForm!: FormGroup;
-  errorMessage: string = '';
+export class LoginComponent {
+  authService = inject(AuthService);
+  router = inject(Router);
+  errorMessage = signal<string | null>(null);
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)])
+  });
 
-  ngOnInit(): void {
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    });
-  }
-
-  // --- Lógica de la función ---
-  onSubmit(): void {
-    this.errorMessage = ''; // Limpiar errores anteriores
-
-    if (this.loginForm.invalid) {
-      this.errorMessage = 'Por favor, introduce credenciales válidas.';
-      return;
-    }
-
-    const credentials = this.loginForm.value;
-
-    this.authService.login(credentials).subscribe({
-      next: (response) => {
-        // Asumiendo que el servicio guarda el token y/o estado de usuario
-        console.log('Login exitoso:', response);
-        this.router.navigate(['/home']); // Redirigir al inicio o dashboard
-      },
-      error: (err) => {
-        console.error('Error de autenticación:', err);
-        // Mostrar un mensaje de error más amigable
-        this.errorMessage = err.error?.message || 'Email o contraseña incorrectos.';
+  async onSubmit() {
+    this.errorMessage.set(null); 
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+      if (email && password) {
+        try {
+          await this.authService.login({ email, password });
+          this.router.navigate(['/']); 
+        } catch (e: any) {
+          this.errorMessage.set(e.message || 'Error al iniciar sesión. Por favor, intente de nuevo.');
+        }
       }
-    });
+    }
   }
-
-  // Helper para acceder fácilmente a los controles del formulario
-  get f() { return this.loginForm.controls; }
 }

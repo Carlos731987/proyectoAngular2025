@@ -1,5 +1,71 @@
-<main>
-  <h1>Catálogo de Productos</h1>
-  <p>Aquí va tu contenido del catálogo...</p>
-  <!-- NO pongas navbar ni footer aquí -->
-</main>
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        
+        <!-- Encabezado del Catálogo -->
+        <header class="text-center mb-12">
+          <h1 class="text-5xl font-extrabold text-gray-900 tracking-tight">
+            Nuestro Catálogo de Productos
+          </h1>
+          <p class="mt-4 text-xl text-gray-600">
+            Descubre nuestra exclusiva selección de importaciones.
+          </p>
+        </header>
+
+        <!-- Filtros (Simulación) -->
+        <div class="flex justify-center mb-8">
+          <div class="space-x-4">
+            <button class="px-4 py-2 bg-amber-500 text-white rounded-lg shadow-md hover:bg-amber-600 transition duration-150">
+              Más Vendidos
+            </button>
+            <button class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition duration-150">
+              Novedades
+            </button>
+            <button class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 transition duration-150">
+              Ofertas
+            </button>
+          </div>
+        </div>
+
+        <!-- Grilla de Productos -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          
+          @for (producto of productos; track producto.id) {
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-[1.02] transition duration-300 border border-gray-100">
+              <div class="h-48 w-full bg-gray-200 flex items-center justify-center relative">
+                <!-- Imagen del Producto (Placeholder) -->
+                <img [src]="producto.imagenUrl" 
+                     [alt]="producto.nombre" 
+                     class="w-full h-full object-cover"
+                     onerror="this.onerror=null;this.src='https://placehold.co/400x300/a8a8a8/ffffff?text=Producto'">
+                
+                <span class="absolute top-2 right-2 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
+                  Nuevo
+                </span>
+              </div>
+              
+              <div class="p-5">
+                <h3 class="text-xl font-semibold text-gray-800 truncate" [title]="producto.nombre">
+                  {{ producto.nombre }}
+                </h3>
+                <p class="mt-2 text-gray-600 text-sm line-clamp-2">
+                  {{ producto.descripcion }}
+                </p>
+                <div class="mt-4 flex items-center justify-between">
+                  <span class="text-2xl font-bold text-gray-900">
+                    \${{ producto.precio | number: '1.2-2' }}
+                  </span>
+                  <button class="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition duration-150 shadow-lg">
+                    Ver Detalle
+                  </button>
+                </div>
+              </div>
+            </div>
+          } @empty {
+            <div class="col-span-full text-center py-10 text-gray-500">
+              <p>No hay productos disponibles en este momento.</p>
+            </div>
+          }
+
+        </div>
+      </div>
+    </div>
