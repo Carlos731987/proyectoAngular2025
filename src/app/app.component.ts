@@ -8,10 +8,14 @@ import { FooterComponent } from './components/footer/footer.component';
   selector: 'app-root',
   standalone: true,
    imports: [RouterOutlet, NavbarComponent,  FooterComponent],
-  templateUrl: './app.component.html',
+  template: `
+    <app-navbar></app-navbar>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+  `,
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'shoe-store';
+  title = 'importaciones-brisa-denis';
 }
 
