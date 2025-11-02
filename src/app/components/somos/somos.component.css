@@ -12,7 +12,6 @@
   margin: 0;
 }
 
-/* IMAGEN A LA IZQUIERDA - OCUPA MITAD DE LA PANTALLA */
 .image-container {
   flex: 1;
   background-color: #f5f5f5;
@@ -41,7 +40,6 @@
   display: block;
 }
 
-/* CONTENIDO A LA DERECHA */
 .content-container {
   flex: 1;
   padding: 40px;
@@ -78,7 +76,6 @@
   line-height: 1.4;
 }
 
-/* Título especial para "El Sueño del Local Propio" */
 .dream-title {
   margin-top: 50px;
   padding-top: 20px;
@@ -93,7 +90,6 @@
   text-align: justify;
 }
 
-/* SECCIÓN POR QUÉ ELEGIRNOS */
 .why-choose-us {
   margin-top: 40px;
   padding-top: 20px;
@@ -123,7 +119,6 @@
   font-size: 18px;
 }
 
-/* RESPONSIVE */
 @media (max-width: 768px) {
   .about-section {
     flex-direction: column;

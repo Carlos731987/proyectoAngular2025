@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./somos.component.css']
 })
 export class SomosComponent {
-  // Puedes agregar variables aquí si necesitas
   titulo = 'Quiénes Somos';
   descripcion = 'Somos Importaciones Brisa & Denis - tu tienda de confianza';
 }

@@ -6,14 +6,12 @@
       <h3 class="footer-title">ENCONTRANOS EN</h3>
       <div class="location">
         <div class="address-item">
-          
           <div>
             <p class="address-bold">📍 Av. Mitre 5560</p>
             <p class="address-city">Avellaneda</p>
           </div>
         </div>
         <div class="address-item">
-         
           <div>
             <p class="address-bold">📍 Las Flores 670</p>
             <p class="address-city">Wilde</p>
@@ -37,16 +35,21 @@
       </div>
     </div>
 
-    <!-- Columna 3: NEWSLETTER -->
-    <div class="footer-section">
-      <h3 class="footer-title">NEWSLETTER</h3>
-      <p class="newsletter-desc">Suscribite para recibir promociones y descuentos exclusivos</p>
-      
-      <div class="newsletter-form">
-        <input type="email" placeholder="Tu correo electrónico" class="email-input">
-        <button class="subscribe-btn">SUSCRIBIRSE</button>
-      </div>
-    </div>
+    <!-- NEWSLETTER -->
+<div class="newsletter-section">
+  <h3>NEWSLETTER</h3>
+  <p>Suscribite para recibir promociones y descuentos exclusivos</p>
+  <div class="newsletter-form">
+    <input 
+      type="email" 
+      [(ngModel)]="email"
+      placeholder="Mi correo electrónico" 
+      class="email-input">
+    <button (click)="suscribir()" class="subscribe-btn">
+      SUSCRIBIRSE
+    </button>
+  </div>
+</div>
 
   </div>
 

@@ -19,7 +19,7 @@
 }
 
 .footer-title {
-  color: #e67e22; /* Naranja */
+  color: #e67e22;
   font-size: 1.3rem;
   margin-bottom: 1.2rem;
   font-weight: 700;
@@ -28,7 +28,6 @@
   display: inline-block;
 }
 
-/* Estilos para direcciones */
 .location {
   display: flex;
   flex-direction: column;
@@ -58,7 +57,6 @@
   font-size: 0.9rem;
 }
 
-/* Estilos para horarios */
 .schedule {
   display: flex;
   flex-direction: column;
@@ -84,7 +82,6 @@
   font-size: 0.95rem;
 }
 
-/* Estilos para newsletter */
 .newsletter-desc {
   color: #bdc7bd;
   margin-bottom: 1.2rem;
@@ -127,7 +124,6 @@
   transform: translateY(-2px);
 }
 
-/* Línea separadora */
 .footer-separator {
   height: 1px;
   background: linear-gradient(90deg, transparent 0%, #e67e22 50%, transparent 100%);
@@ -135,7 +131,6 @@
   max-width: 1200px;
 }
 
-/* Footer bottom */
 .footer-bottom {
   max-width: 1200px;
   margin: 0 auto;
@@ -173,7 +168,6 @@
   margin: 0;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .footer-container {
     grid-template-columns: 1fr;
