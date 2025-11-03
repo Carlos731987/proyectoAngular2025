@@ -8,8 +8,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './somos.component.html',
   styleUrls: ['./somos.component.css']
 })
-export class SomosComponent {
-  // Puedes agregar variables aquí si necesitas
+export class SomosComponent {  
   titulo = 'Quiénes Somos';
   descripcion = 'Somos Importaciones Brisa & Denis - tu tienda de confianza';
 }
