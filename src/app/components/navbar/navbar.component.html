@@ -54,7 +54,8 @@
           
           @if (authService.isAuthenticated()) {
           <span class="auth-greeting">
-            Hola, {{ authService.currentUser()?.displayName ?? "" | titleCase }}
+            <!-- utilizamos la pipe personalizada -->
+            Hola, {{ authService.currentUser()?.displayName ?? "" | titleCase }} 
           </span>
           }
         } @else {

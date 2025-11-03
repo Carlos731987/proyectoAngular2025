@@ -1,29 +1,26 @@
-/* 1. Tipografía Global */
-    
+/*Tipografía Global */
     :host {
       font-family: 'Georgia', 'Times New Roman', serif;
     }
     .title-font {
         font-family: 'Verdana', sans-serif;
     }
-    /* Contenedor Principal */
+
+    /* 2. Contenedor Principal (Fondo Vivo) */
     .login-container {
       display: flex;
       justify-content: center;
       align-items: center;
-      /* AJUSTE CLAVE: Reducimos el min-height y el padding vertical */
-      min-height: calc(100vh - 4.8rem); 
-      /* background: linear-gradient(145deg, #1f2937 0%, #000000 100%);  */
-      padding: 1rem 0; /* REDUCCIÓN DEL PADDING VERTICAL */
+      min-height: calc(100vh - 4.8rem);       
+      padding: 1rem 0; 
     }
     
-    /*  Tarjeta del Formulario */
+    /* 3. Tarjeta del Formulario (Contraste Fuerte) */
     .form-card {
       background-color: #ffffff; 
-      text-align: center;
       padding: 3rem;
       border-radius: 1rem; 
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.1); 
       max-width: 450px; 
       width: 100%;
       border: 2px solid #e67e22; 
@@ -31,23 +28,21 @@
       transition: all 0.3s ease-in-out;
     }
     
+    /* 4. Estilos de Formulario */
     .label-style {
-        display: flex;
-        font-size: 1rem;
+        display: block;
+        font-size: 0.9rem;
         font-weight: 600;
         color: #374151; 
-        margin-top: 1rem;
+        margin-bottom: 0.25rem;
     }
     
     .input-style {
-        width: 90%;
-        font-size: 1rem;
+        width: 100%;
         padding: 0.65rem 1rem;
         border: 1px solid #d1d5db;
         border-radius: 0.5rem;
         transition: border-color 0.3s, box-shadow 0.3s;
-        margin-top: 0.50rem;
-        margin-bottom: 1rem;
     }
     .input-style:focus {
         border-color: #e67e22; 
@@ -55,15 +50,19 @@
         outline: none;
     }
 
-    /* Botón de Enviar */
+    /* 5. Botón de Enviar (Fuerte Contraste) */
     .submit-button {
+      width: 100%;
+      display: flex;
       justify-content: center;
-      padding: 0.5rem 1rem;
+      padding: 0.75rem 1rem;
       border-radius: 0.5rem;
       font-size: 1rem;
+      font-weight: 700;
       color: white;
-      background-color: #e67e22;
+      background-color: #e67e22; 
       transition: background-color 0.3s, transform 0.2s;
+      box-shadow: 0 4px 6px -1px rgba(230, 126, 34, 0.3);
     }
     .submit-button:hover:not(:disabled) {
         background-color: #d35400; 
@@ -74,7 +73,13 @@
         cursor: not-allowed;
     }
     
-    /* Mensajes de Error */
+    /* 6. Mensajes de Error */
     .error-message {
         color: #ef4444; 
+        font-weight: 600;
+        text-align: center;
+        background-color: #fee2e2;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid #fca5a5;
     }

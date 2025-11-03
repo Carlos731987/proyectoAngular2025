@@ -1,73 +1,60 @@
 <div class="login-container">
   <div class="form-card">
-    <h2>
+    <h2 class="text-4xl font-extrabold title-font text-center mb-8">
       Bienvenido
     </h2>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)" class="space-y-6">
+      
       <div>
         <label for="email" class="label-style">Email</label>
-        <input
-          id="email"
-          type="email"
-          formControlName="email"
-          required
+        <input 
+          id="email" 
+          type="email" 
+          formControlName="email" 
+          required 
           placeholder="su.email@ejemplo.com"
           class="input-style"
-          [ngClass]="{
-            'border-red-500':
-              loginForm.get('email')?.invalid && loginForm.get('email')?.touched
-          }"
-        />
-        @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched)
-        {
-        <p class="error-message">Email inválido o requerido.</p>
+          [ngClass]="{'border-red-500': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
+        >
+        @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+          <p class="mt-2 text-sm text-red-600">Email inválido o requerido.</p>
         }
       </div>
 
       <div>
         <label for="password" class="label-style">Contraseña</label>
-        <input
-          id="password"
-          type="password"
-          formControlName="password"
-          required
+        <input 
+          id="password" 
+          type="password" 
+          formControlName="password" 
+          required 
           placeholder="mínimo 6 caracteres"
           class="input-style"
-          [ngClass]="{
-            'border-red-500':
-              loginForm.get('password')?.invalid &&
-              loginForm.get('password')?.touched
-          }"
-        />
-        @if (loginForm.get('password')?.invalid &&
-        loginForm.get('password')?.touched) {
-        <p class="error-message">
-          Contraseña requerida (mín. 6 caracteres).
-        </p>
+          [ngClass]="{'border-red-500': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
+        >
+        @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+          <p class="mt-2 text-sm text-red-600">Contraseña requerida (mín. 6 caracteres).</p>
         }
       </div>
 
       @if (errorMessage()) {
-      <p class="error-message">{{ errorMessage() }}</p>
+        <p class="error-message">{{ errorMessage() }}</p>
       }
 
       <div>
-        <button
-          type="submit"
-          [disabled]="loginForm.invalid"
+        <button 
+          type="submit" 
+          [disabled]="loginForm.invalid || isSubmitting()"
           class="submit-button"
         >
-          Iniciar Sesión
+          {{ isSubmitting() ? 'Verificando...' : 'Iniciar Sesión' }}
         </button>
       </div>
     </form>
 
-    <p class="">
-      ¿No tienes una cuenta?
-      <a
-        routerLink="/registrate"
-        class=""
-      >
+    <p class="mt-8 text-center text-sm text-gray-500">
+      ¿No tienes una cuenta? 
+      <a routerLink="/registrate" class="font-bold text-indigo-500 hover:text-indigo-400 transition duration-200">
         Regístrate aquí
       </a>
     </p>
