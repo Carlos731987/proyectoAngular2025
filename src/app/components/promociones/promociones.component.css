@@ -34,7 +34,7 @@
   line-height: 1.6;
 }
 
-/* CAMBIÉ SOLO ESTAS MEDIDAS PARA LAS BURBUJAS */
+
 .promociones-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -50,7 +50,7 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
-  height: 480px; /* ALTURA FIJA PARA QUE TODAS SEAN IGUALES */
+  height: 480px; 
 }
 
 .promocion-card:hover {
@@ -70,9 +70,9 @@
 .promocion-imagen img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* CAMBIÉ de 'cover' a 'contain' */
+  object-fit: contain; 
   transition: transform 0.3s ease;
-  background-color: #f8f9fa; /* Agregué fondo para áreas vacías */
+  background-color: #f8f9fa; 
 }
 
 .promocion-card:hover .promocion-imagen img {
@@ -209,7 +209,7 @@
   }
   
   .promocion-card {
-    height: auto; /* ALTURA AUTOMÁTICA EN MÓVIL */
+    height: auto; 
   }
   
   .precio-container {
