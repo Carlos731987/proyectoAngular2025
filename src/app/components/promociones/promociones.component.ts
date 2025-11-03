@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-interface Oferta {
+interface Promocion {
   id: number;
   titulo: string;
+  subtitulo: string;
+  imagen: string;
   descripcion: string;
-  descuento: string;
-  color: string;
-  imagenUrl: string; // Placeholder
+  precioTotal: string;
+  precioUnitario: string;
+  mensajeWhatsapp: string;
 }
 
 @Component({
@@ -15,34 +17,45 @@ interface Oferta {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './promociones.component.html',
-  styleUrls: ['./promociones.component.css']    
+  styleUrls: ['./promociones.component.css']
 })
 export class PromocionesComponent {
-  // Datos de promociones de prueba
-  ofertas: Oferta[] = [
+  readonly whatsappBaseUrl = 'https://wa.me/message/3C2ADYSPHC7CE1?text=';
+  
+  promociones: Promocion[] = [
     {
       id: 1,
-      titulo: 'Tecnología Portátil',
-      descripcion: '20% de descuento en todos los relojes inteligentes y auriculares inalámbricos.',
-      descuento: '20% OFF',
-      color: 'red',
-      imagenUrl: 'https://placehold.co/400x300/f87171/ffffff?text=Tech',
+      titulo: 'Caja por mayor',
+      subtitulo: '3 unidades',
+      imagen: 'assets/images/3unidmay.jpeg',
+      descripcion: 'Máxima rentabilidad por unidad. Ideal para el que ya quiere arrancar fuerte y tiene un punto de venta.',
+      precioTotal: '$183.000',
+      precioUnitario: '$61.000 c/u',
+      mensajeWhatsapp: 'Hola, quiero comprar una caja por mayor'
     },
     {
       id: 2,
-      titulo: 'Especial Hogar',
-      descripcion: '15% de descuento adicional en todas las máquinas de café y accesorios de cocina.',
-      descuento: '15% OFF',
-      color: 'green',
-      imagenUrl: 'https://placehold.co/400x300/34d399/ffffff?text=Hogar',
+      titulo: 'Caja surtida',
+      subtitulo: '6 unidades',
+      imagen: 'assets/images/6unidmay.jpeg',
+      descripcion: 'El equilibrio perfecto. Variedad para probar el mercado sin una inversión tan grande.',
+      precioTotal: '$354.000',
+      precioUnitario: '$59.000 c/u',
+      mensajeWhatsapp: 'Hola, quiero comprar una caja surtida'
     },
     {
       id: 3,
-      titulo: 'Liquidación de Temporada',
-      descripcion: 'Hasta 40% de descuento en bolsos de cuero y mochilas tácticas seleccionadas.',
-      descuento: '40% OFF',
-      color: 'blue',
-      imagenUrl: 'https://placehold.co/400x300/60a5fa/ffffff?text=Liquidacion',
-    },
+      titulo: 'Caja cerrada',
+      subtitulo: '12 unidades',
+      imagen: 'assets/images/12unidmay.jpeg',
+      descripcion: 'Nuestro pack estrella, el mismo con el que empezamos a cambiar todo. Inversión mínima, riesgo bajo.',
+      precioTotal: '$600.000',
+      precioUnitario: '$50.000 c/u',
+      mensajeWhatsapp: 'Hola, quiero comprar una caja cerrada'
+    }
   ];
+
+  getWhatsappUrl(mensaje: string): string {
+    return `${this.whatsappBaseUrl}${encodeURIComponent(mensaje)}`;
+  }
 }

@@ -1,64 +1,51 @@
-<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-7xl mx-auto">
-        
-        <!-- Encabezado y Banner de Promoción Principal -->
-        <header class="text-center mb-16">
-          <h1 class="text-5xl font-extrabold text-gray-900 tracking-tight">
-            Ofertas Exclusivas de la Semana
-          </h1>
-          <p class="mt-4 text-xl text-gray-600">
-            ¡Aprovecha nuestros descuentos limitados en productos importados!
-          </p>
-        </header>
-
-        <!-- Banner de Descuento Destacado -->
-        <div class="bg-indigo-600 rounded-2xl p-6 sm:p-10 mb-12 shadow-2xl transform hover:scale-[1.01] transition duration-300">
-          <div class="flex flex-col md:flex-row justify-between items-center">
-            <div class="text-white text-center md:text-left mb-6 md:mb-0">
-              <h2 class="text-3xl sm:text-4xl font-bold">
-                ¡ENVÍO GRATIS en pedidos superiores a \$100!
-              </h2>
-              <p class="mt-2 text-indigo-200">
-                Válido hasta agotar stock o finalizar el mes.
-              </p>
-            </div>
-            <a routerLink="/catalogo" class="px-8 py-3 bg-amber-400 text-indigo-900 text-lg font-bold rounded-full shadow-xl hover:bg-amber-300 transition duration-200 uppercase">
-              Comprar Ahora
-            </a>
-          </div>
+<div class="container">
+  <div class="header">
+    <h1>Comenzá Tu Viaje Emprendedor</h1>
+    <p>
+      Dar el primer paso para materializar tu sueño requiere coraje y determinación.
+      En Brisa y Denis lo sabemos, y queremos ser el impulso que necesitás para lanzarte.
+      Porque todo gran emprendimiento empezó con una sola idea y una pequeña acción, 
+      creamos promociones pensadas especialmente para vos. Son más que cajas; son un punto
+      de partida, una herramienta y tu primer inventario.
+    </p>
+  </div>
+  
+  <div class="promociones-grid">
+    <!-- Promoción Card -->
+    <div class="promocion-card" *ngFor="let promocion of promociones">
+      <div class="promocion-imagen">
+        <img [src]="promocion.imagen" [alt]="promocion.titulo">
+      </div>
+      <div class="promocion-contenido">
+        <h2 class="promocion-titulo">{{ promocion.titulo }}</h2>
+        <h3 class="promocion-subtitulo">{{ promocion.subtitulo }}</h3>
+        <p class="promocion-descripcion">{{ promocion.descripcion }}</p>
+        <div class="precio-container">
+          <div class="precio-total">{{ promocion.precioTotal }}</div>
+          <div class="precio-unidad">{{ promocion.precioUnitario }}</div>
         </div>
-
-        <!-- Grilla de Ofertas Individuales -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          
-          @for (oferta of ofertas; track oferta.id) {
-            <div class="bg-white rounded-xl shadow-lg p-6 border-t-8" [ngClass]="['border-' + oferta.color + '-500']">
-              <div class="flex items-start space-x-4">
-                
-                <!-- Ícono de Descuento (Simulación) -->
-                <div [ngClass]="['bg-' + oferta.color + '-100', 'text-' + oferta.color + '-700']" class="p-3 rounded-full flex-shrink-0">
-                  <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.56 0 1.07.234 1.442.613l7.005 7.005a2.001 2.001 0 010 2.828l-7.005 7.005A2.001 2.001 0 0112 21h-5a2 2 0 01-2-2v-5a2 2 0 01.586-1.414l7.005-7.005A2.001 2.001 0 0113.92 3.498L13 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-.586-1.414l-7.005-7.005A2.001 2.001 0 0012 3z"/>
-                  </svg>
-                </div>
-                
-                <div>
-                  <h3 class="text-2xl font-bold text-gray-900">
-                    {{ oferta.titulo }}
-                  </h3>
-                  <p class="mt-1 text-sm text-gray-600">
-                    {{ oferta.descripcion }}
-                  </p>
-                  <div class="mt-4">
-                    <a routerLink="/catalogo" class="text-indigo-600 font-semibold hover:text-indigo-800 transition duration-150">
-                      Ver Oferta ({{ oferta.descuento }}) &rarr;
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          }
-
-        </div>
+        <a 
+          [href]="getWhatsappUrl(promocion.mensajeWhatsapp)" 
+          class="btn-whatsapp" 
+          target="_blank"
+          rel="noopener">
+          <span class="whatsapp-icon">📱</span> Comprar por WhatsApp
+        </a>
       </div>
     </div>
+  </div>
+  
+  <div class="footer">
+    <p>
+      Síguenos en Instagram: 
+      <a 
+        href="https://instagram.com/importacuonesbrisaydenis" 
+        class="instagram-link" 
+        target="_blank"
+        rel="noopener">
+        &#64;importacuonesbrisaydenis
+      </a>
+    </p>
+    <p>ENVIAMOS A DOMICILIO</p>
+  </div>
+</div>
