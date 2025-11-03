@@ -1,5 +1,51 @@
-<main>
-  <h1>Promociones Especiales</h1>
-  <p>Aquí van tus promociones...</p>
-  <!-- NO pongas navbar ni footer aquí -->
-</main>
+<div class="container">
+  <div class="header">
+    <h1>Comenzá Tu Viaje Emprendedor</h1>
+    <p>
+      Dar el primer paso para materializar tu sueño requiere coraje y determinación.
+      En Brisa y Denis lo sabemos, y queremos ser el impulso que necesitás para lanzarte.
+      Porque todo gran emprendimiento empezó con una sola idea y una pequeña acción, 
+      creamos promociones pensadas especialmente para vos. Son más que cajas; son un punto
+      de partida, una herramienta y tu primer inventario.
+    </p>
+  </div>
+  
+  <div class="promociones-grid">
+    <!-- Promoción Card -->
+    <div class="promocion-card" *ngFor="let promocion of promociones">
+      <div class="promocion-imagen">
+        <img [src]="promocion.imagen" [alt]="promocion.titulo">
+      </div>
+      <div class="promocion-contenido">
+        <h2 class="promocion-titulo">{{ promocion.titulo }}</h2>
+        <h3 class="promocion-subtitulo">{{ promocion.subtitulo }}</h3>
+        <p class="promocion-descripcion">{{ promocion.descripcion }}</p>
+        <div class="precio-container">
+          <div class="precio-total">{{ promocion.precioTotal }}</div>
+          <div class="precio-unidad">{{ promocion.precioUnitario }}</div>
+        </div>
+        <a 
+          [href]="getWhatsappUrl(promocion.mensajeWhatsapp)" 
+          class="btn-whatsapp" 
+          target="_blank"
+          rel="noopener">
+          <span class="whatsapp-icon">📱</span> Comprar por WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer">
+    <p>
+      Síguenos en Instagram: 
+      <a 
+        href="https://instagram.com/importacuonesbrisaydenis" 
+        class="instagram-link" 
+        target="_blank"
+        rel="noopener">
+        &#64;importacuonesbrisaydenis
+      </a>
+    </p>
+    <p>ENVIAMOS A DOMICILIO</p>
+  </div>
+</div>

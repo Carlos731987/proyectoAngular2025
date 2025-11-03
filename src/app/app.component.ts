@@ -7,15 +7,17 @@ import { FooterComponent } from './components/footer/footer.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-   imports: [RouterOutlet, NavbarComponent,  FooterComponent],
+  imports: [
+    RouterOutlet, 
+    NavbarComponent, 
+    FooterComponent ], 
   template: `
     <app-navbar></app-navbar>
     <router-outlet></router-outlet>
     <app-footer></app-footer>
   `,
-  styleUrl: './app.component.css',
+  styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'importaciones-brisa-denis';
+  title = 'tu-app';
 }
-
