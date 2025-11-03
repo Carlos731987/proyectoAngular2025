@@ -1,15 +1,244 @@
+main {
+    background-color: rgb(237, 186, 110);
+}
 
 h1 {
     text-align: center;
 }
-/* Estilos para Redes Sociales */
+
+/* Products Section */
+.products {
+  padding: 60px 0;
+  background: #f8f9fa;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.product-card {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.proximamente-tag {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff6b35;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  z-index: 2;
+  white-space: nowrap;
+}
+
+.product-image {
+  height: 200px;
+  border-radius: 10px;
+  margin: 15px 0;
+  overflow: hidden;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.product-card h3 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.product-card p {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .product-image {
+    height: 180px;
+  }
+  
+  .proximamente-tag {
+    font-size: 0.8rem;
+    padding: 6px 15px;
+  }
+}
+
+/* Hero Section */
+.hero {
+  background: #52037f;
+  color: white;
+  padding: 60px 0;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+/* Products Section */
+.products {
+  padding: 60px 0;
+  background: #f8f9fa;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.product-card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.product-image {
+  height: 200px;
+  background: #e9ecef;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.imported-tag {
+  background: #52037f;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.product-card h3 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.product-card p {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Benefits Section */
+.benefits {
+  padding: 60px 0;
+  background: white;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.benefit-card {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.benefit-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.benefit-card h4 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.benefit-card p {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Catalog Button */
+.catalog-cta {
+  padding: 40px 0;
+  background: #f8f9fa;
+  text-align: center;
+}
+
+.catalog-btn {
+  background: #52037f;
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.catalog-btn:hover {
+  background: #e55a2b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+  
+  .products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+}
 .redes-sociales {
   text-align: center;
   padding: 20px;
   margin: 20px 0;
 }
 
-.redes-sociales h3 {
+.redes-sociales h1 {
   color: #333;
   margin-bottom: 20px;
   font-size: 1.2em;
@@ -40,7 +269,6 @@ h1 {
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
-/* Facebook - Azul */
 .facebook {
   background: #1877f2;
 }
@@ -49,7 +277,6 @@ h1 {
   background: #166fe5;
 }
 
-/* Instagram - Gradiente morado/naranja */
 .instagram {
   background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
 }
@@ -58,7 +285,6 @@ h1 {
   background: linear-gradient(45deg, #374bc4, #4a44c0, #723299, #a82a71, #c2285d, #e01a1a);
 }
 
-/* TikTok - Negro con rojo */
 .tiktok {
   background: #000000;
   position: relative;
@@ -71,29 +297,17 @@ h1 {
   left: 0;
   right: 0;
   height: 3px;
+  background: linear-gradient(90deg, #ff0050, #00f2ea);
 }
 
 .tiktok:hover {
   background: #111111;
 }
 
-/* Iconos Font Awesome */
 .red-social i {
   font-size: 1.1em;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .redes-container {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .red-social {
-    width: 200px;
-    justify-content: center;
-  }
-}
 .whatsapp-button {
   position: fixed;
   bottom: 20px;
@@ -117,4 +331,308 @@ h1 {
 .whatsapp-link:hover {
   transform: scale(1.1);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.carousel-section {
+  padding: 40px 0;
+  background-color: #f8f9fa;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 2rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+@media (max-width: 768px) {
+  .redes-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .red-social {
+    width: 200px;
+    justify-content: center;
+  }
+}
+
+/* Promotions Home Section */
+.promotions-home {
+  padding: 80px 0;
+  background: white;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 50px;
+  font-weight: bold;
+}
+
+.promotions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.promo-card {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 3px solid #ff6b35;
+}
+
+.promo-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.promo-header {
+  margin-bottom: 20px;
+}
+
+.promo-header h3 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+.units {
+  background: #ff6b35;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.promo-desc {
+  color: #666;
+  margin-bottom: 25px;
+  font-style: italic;
+}
+
+.promo-offer {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.ofertas-tag {
+  background: #28a745;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 25px;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+/* Benefits Section */
+.benefits {
+  padding: 80px 0;
+  background: #f8f9fa;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+}
+
+.benefit-card {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.benefit-icon {
+  font-size: 3.5rem;
+  margin-bottom: 25px;
+}
+
+.benefit-card h4 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+.benefit-card p {
+  color: #666;
+  font-size: 1rem;
+}
+
+/* Buttons */
+.see-more-btn {
+  background: #ff6b35;
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.see-more-btn:hover {
+  background: #e55a2b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .promotions-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .promo-card {
+    padding: 20px;
+  }
+}
+
+/* Promotions Home Section */
+.promotions-home {
+  padding: 80px 0;
+  background: white;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 50px;
+  font-weight: bold;
+}
+
+.promotions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.promo-card {
+  background: white;
+  border-radius: 15px;
+  padding: 0;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 3px solid #000000;
+  overflow: hidden;
+}
+
+.promo-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.promo-image {
+  height: 200px;
+  overflow: hidden;
+  background: #f8f9fa;
+}
+
+.promo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.promo-content {
+  padding: 25px;
+}
+
+.promo-header {
+  margin-bottom: 15px;
+}
+
+.promo-header h3 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+.units {
+  background: #ff6b35;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.promo-desc {
+  color: #666;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.promo-offer {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 0 15px 15px 15px;
+}
+
+.ofertas-tag {
+  background: #5611a0;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 25px;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .promotions-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .promo-image {
+    height: 180px;
+  }
 }

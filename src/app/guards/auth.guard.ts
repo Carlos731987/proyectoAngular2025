@@ -1,6 +1,6 @@
 import { inject, Injector } from '@angular/core'; 
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
-import { map, take } from 'rxjs';
+import { map, take, filter } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { toObservable } from '@angular/core/rxjs-interop'; // Importamos toObservable
 
@@ -15,16 +15,15 @@ export const authGuard: CanActivateFn = () => {
   const injector = inject(Injector); // Inyectamos el Injector
 
   // FIX: Convertimos la señal authService.isAuthenticated() a un Observable
-  return toObservable(authService.isAuthenticated, { injector: injector }).pipe(
+  return toObservable(authService.loading, { injector: injector }).pipe(
+    filter(loading => loading === false), // Ignora todos los valores hasta que la carga termine
     take(1),
+    map(() => authService.isAuthenticated()),
+
     map(isAuthenticated => {
       // Si el usuario NO está autenticado, redirige a la página de inicio de sesión.
-      if (!isAuthenticated) {
-        return router.createUrlTree(['/iniciar-sesion']);
-      }
-
-      // Si el usuario SÍ está autenticado, permite el acceso a la ruta.
-      return true;
+      if (!isAuthenticated) { return router.createUrlTree(['/iniciar-sesion']);}
+     return true;//permite el acceso
     })
   );
 };

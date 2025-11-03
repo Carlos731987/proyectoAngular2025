@@ -1,8 +1,144 @@
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+    <h1>IMPORTACIONES BRISA Y DENIS</h1>
+    <p class="subtitle">LO MEJOR PARA VOS</p>
+  </div>
+</section>
 
- <main>
-  <section>
-  <!-- Boton de whatsapp-butto -->
-  <div class="whatsapp-button">
+<!-- Sección de Zapatillas -->
+<section class="products">
+  <div class="container">
+    <div class="products-grid">
+      <!-- Producto 1 -->
+      <div class="product-card">
+        <span class="proximamente-tag">Proximamente</span>
+        <div class="product-image">
+          <img src="assets/images/mod1.jpeg" alt="ADIDAS SUPERSTAR" class="product-img">
+        </div>
+        <h3>ADIDAS SUPERSTAR</h3>
+        <p>Super altas, comodas y facheras para toda ocasion.</p>
+      </div>
+
+      <!-- Producto 2 -->
+      <div class="product-card">
+        <span class="proximamente-tag">Proximamente</span>
+        <div class="product-image">
+          <img src="assets/images/mod2.jpeg" alt="LV SKATE SNEAKER" class="product-img">
+        </div>
+        <h3>LV SKATE SNEAKER</h3>
+        <p>Más que unas zapatillas comodas y facheras.</p>
+      </div>
+
+      <!-- Producto 3 -->
+      <div class="product-card">
+        <span class="proximamente-tag">Proximamente</span>
+        <div class="product-image">
+          <img src="assets/images/mod3.jpeg" alt="ADIDAS SAMBA XL" class="product-img">
+        </div>
+        <h3>ADIDAS SAMBA XL</h3>
+        <p>Zapatillas para salir a correr y para ir al gym.</p>
+      </div>
+
+      <!-- Producto 4 -->
+      <div class="product-card">
+        <span class="proximamente-tag">Proximamente</span>
+        <div class="product-image">
+          <img src="assets/images/mod4.jpeg" alt="DC SHOES BLACK" class="product-img">
+        </div>
+        <h3>DC SHOES BLACK</h3>
+        <p>Zapatiilas anchas, comodas para usar skate.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Sección de Beneficios -->
+<section class="benefits">
+  <div class="container">
+    <div class="benefits-grid">
+      <!-- Beneficio 1 -->
+      <div class="benefit-card">
+        <div class="benefit-icon">🚚</div>
+        <h4>ENVIAMOS TU COMPRA</h4>
+        <p>Entregas a todo el país</p>
+      </div>
+
+      <!-- Beneficio 2 -->
+      <div class="benefit-card">
+        <div class="benefit-icon">💳</div>
+        <h4>PAGA COMO QUIERAS</h4>
+        <p>Tarjetas de credito o efectivo</p>
+      </div>
+
+      <!-- Beneficio 3 -->
+      <div class="benefit-card">
+        <div class="benefit-icon">🔒</div>
+        <h4>COMPRA CON SEGURIDAD</h4>
+        <p>Tus datos siempre protegidos</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Sección Promociones -->
+<section class="promotions-home">
+  <div class="container">
+    <h2 class="section-title">PROMOCIONES</h2>
+    <div class="promotions-grid">
+      <!-- Promoción 1 - PAR MAYOR -->
+      <div class="promo-card" routerLink="/promociones">
+        <div class="promo-image">
+          <img src="assets/images/3unidmay.jpeg" alt="PAR MAYOR - 3 UNIDADES" class="promo-img">
+        </div>
+        <div class="promo-header">
+          <h3>PAR MAYOR</h3>
+          <span class="units">3 UNIDADES</span>
+        </div>
+        <p class="promo-desc">Para tu emprendimiento</p>
+        <div class="promo-offer">
+          <span class="ofertas-tag">OFERTON</span>
+          <p class="price">A SOLO $183.000</p>
+        </div>
+      </div>
+
+      <!-- Promoción 2 - CAJA SURTIDA -->
+      <div class="promo-card" routerLink="/promociones">
+        <div class="promo-image">
+          <img src="assets/images/6unidmay.jpeg" alt="CAJA SURTIDA - 6 UNIDADES" class="promo-img">
+        </div>
+        <div class="promo-header">
+          <h3>CAJA SURTIDA</h3>
+          <span class="units">6 UNIDADES</span>
+        </div>
+        <p class="promo-desc">Para tu emprendimiento</p>
+        <div class="promo-offer">
+          <span class="ofertas-tag">OFERTON</span>
+          <p class="price">A SOLO $380.000</p>
+        </div>
+      </div>
+
+      <!-- Promoción 3 - CAJA CERRADA -->
+      <div class="promo-card" routerLink="/promociones">
+        <div class="promo-image">
+          <img src="assets/images/12unidmay.jpeg" alt="CAJA CERRADA - 12 UNIDADES" class="promo-img">
+        </div>
+        <div class="promo-header">
+          <h3>CAJA CERRADA</h3>
+          <span class="units">12 UNIDADES</span>
+        </div>
+        <p class="promo-desc">Para tu emprendimiento</p>
+        <div class="promo-offer">
+          <span class="ofertas-tag">OFERTON</span>
+          <p class="price">A SOLO $800.000</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Boton de whatsapp-button -->
+<div class="whatsapp-button">
   <a href="https://wa.me/message/3C2ADYSPHC7CE1" target="_blank" class="whatsapp-link">
     <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -10,9 +146,9 @@
   </a>
 </div>
 
-  <!-- Redes Sociales -->
+<!-- Redes Sociales -->
 <div class="redes-sociales">
-  <h1>Seguinos en nuestras redes</h1>
+  <h2>Seguinos en nuestras redes</h2>
   <div class="redes-container">
     <a href="https://www.facebook.com/share/17c9XpZ6Sb/" class="red-social facebook" target="_blank">
       <i class="fab fa-facebook-f"></i>
@@ -28,12 +164,6 @@
       <i class="fab fa-tiktok"></i>
       TikTok
     </a>
+   
   </div>
 </div>
-  </section>
-</main>
-
-
-
-
-
