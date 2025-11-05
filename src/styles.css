@@ -1,5 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 /* En resumen, estan los archivos globales  */  
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
         --bg-nav: oklch(.4413 .2031 311.18);
         --bg-titles: oklch(.7234 .1878 49.51);
