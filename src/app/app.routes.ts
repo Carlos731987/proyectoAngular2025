@@ -7,6 +7,7 @@ import { PromocionesComponent } from './components/promociones/promociones.compo
 import { SomosComponent } from './components/somos/somos.component';
 import { authGuard } from './guards/auth.guard';
 import { publicGuard } from './guards/public.guard';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   {
@@ -16,11 +17,20 @@ export const routes: Routes = [
       import('./components/home/home.component').then((m) => m.HomeComponent),
   },
   {
-    path: 'home',
-    title: 'Dashboard | Brisa & Denis',
+    path: 'admin', 
+    canActivate: [adminGuard], // Aplicamos la AdminGuard aquí
+    title: 'Panel de Administración | Brisa & Denis',
     loadComponent: () =>
-      import('./components/home/home.component').then((m) => m.HomeComponent),
+      import('./components/admin-dashboard/admin-dashboard.component').then( 
+        (m) => m.AdminDashboardComponent // Asegure que el nombre de la clase sea el correcto
+      ),
   },
+  // {
+  //   path: 'home',
+  //   title: 'Dashboard | Brisa & Denis',
+  //   loadComponent: () =>
+  //     import('./components/home/home.component').then((m) => m.HomeComponent),
+  // },
   {
     path: 'catalogo',
     canActivate: [authGuard],
