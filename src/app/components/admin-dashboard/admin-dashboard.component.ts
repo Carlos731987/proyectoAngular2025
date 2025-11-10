@@ -3,12 +3,6 @@ import { CommonModule, NgClass, DatePipe, DecimalPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ChangeDetectionStrategy, effect } from '@angular/core';
-
-// --- COMPONENTES DE LAYOUT (Aseguran que Navbar y Footer se vean) ---
-// NOTA: Asegure que estas rutas de importación sean válidas en su proyecto
-import { NavbarComponent } from '../navbar/navbar.component';
-import { FooterComponent } from '../footer/footer.component';
-
 // --- SERVICIOS/INFRAESTRUCTURA ---
 import { AuthService } from '../../services/auth.service';
 
@@ -32,7 +26,7 @@ interface Client {
   email: string;
   fullName: string;
   status: 'Activo' | 'Inactivo' | 'Pendiente';
-  lastLogin: Date; 
+  lastLogin: Date;
 }
 
 // --- CONSTANTES GLOBALES (Inyectadas por el entorno de la plataforma) ---
@@ -44,31 +38,33 @@ declare const __initial_auth_token: string;
   selector: 'app-admin-dashboard',
   standalone: true,
   // Incluimos NavbarComponent y FooterComponent para que se muestren
-  imports: [CommonModule, ReactiveFormsModule, NgClass, DatePipe, DecimalPipe, NavbarComponent, FooterComponent], 
+  imports: [CommonModule, ReactiveFormsModule, NgClass, DatePipe, DecimalPipe],
   template: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
 export class AdminDashboardComponent implements OnInit, OnDestroy {
   // --- INYECCIONES Y CONSTANTES ---
   authService = inject(AuthService);
   router = inject(Router);
   fb = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
-  
+
   // Email del administrador para verificación
   readonly ADMIN_EMAIL = 'admin@importsbrisaydenis.com.ar';
-  
+
   // Firestore
   private db!: Firestore;
   private unsubscribers: Unsubscribe[] = [];
-  
+
   // Variables globales
   appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-  
+
   // --- ESTADO Y VISTAS ---
   isAuthReady = signal(false);
-  selectedView = signal<'catalogo' | 'clientes'>('catalogo');
+  // FIX: Agregar 'reportes' al tipo de vista
+  selectedView = signal<'catalogo' | 'clientes' | 'reportes'>('clientes');
   isAdministrator = computed(() => this.authService.currentUser()?.email === this.ADMIN_EMAIL);
 
   // --- ESTADO DE DATOS (SIGNALS) ---
@@ -103,41 +99,41 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
       email: ['', [Validators.required, Validators.email]],
       status: ['Activo', Validators.required],
     });
-    
+
     // Observa el estado de autenticación para decidir si configurar Firestore
     effect(() => {
-        const currentUser = this.authService.currentUser();
-        const loading = this.authService.loading();
+      const currentUser = this.authService.currentUser();
+      const loading = this.authService.loading();
 
-        if (!loading) {
-            this.isAuthReady.set(true);
-            if (currentUser && currentUser.email === this.ADMIN_EMAIL) {
-                this.initFirebase();
-            } else if (currentUser && currentUser.email !== this.ADMIN_EMAIL) {
-                console.error("Usuario logueado no es administrador.");
-            }
+      if (!loading) {
+        this.isAuthReady.set(true);
+        if (currentUser && currentUser.email === this.ADMIN_EMAIL) {
+          this.initFirebase();
+        } else if (currentUser && currentUser.email !== this.ADMIN_EMAIL) {
+          console.error("Usuario logueado no es administrador.");
         }
+      }
     });
 
     // Si el usuario deja de ser admin, forzar redirección
     effect(() => {
-        if (this.isAuthReady() && !this.isAdministrator() && this.authService.currentUser() !== undefined) {
-            if (this.authService.currentUser() !== null) {
-              this.router.navigate(['/somos']);
-            }
+      if (this.isAuthReady() && !this.isAdministrator() && this.authService.currentUser() !== undefined) {
+        if (this.authService.currentUser() !== null) {
+          this.router.navigate(['/somos']);
         }
+      }
     });
   }
 
   // --- LIFECYCLE HOOKS ---
   ngOnInit(): void {
     if (!this.authService.loading() && this.isAdministrator()) {
-        this.initFirebase();
+      this.initFirebase();
     }
   }
 
   ngOnDestroy(): void {
-      this.unsubscribers.forEach(unsub => unsub());
+    this.unsubscribers.forEach(unsub => unsub());
   }
 
   // --- FIREBASE SETUP ---
@@ -152,7 +148,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
 
       const app = initializeApp(firebaseConfig);
       this.db = getFirestore(app);
-      
+
       this.setupFirestoreListeners();
 
     } catch (error) {
@@ -163,10 +159,10 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   // --- FIREBASE LISTENERS ---
   setupFirestoreListeners(): void {
     if (!this.db) {
-        console.error("Firestore no está inicializado.");
-        return;
+      console.error("Firestore no está inicializado.");
+      return;
     }
-    
+
     // 1. Suscriptor de Catálogo
     const productsCollectionRef = collection(this.db, `artifacts/${this.appId}/public/data/products`);
     const unsubscribeProducts = onSnapshot(productsCollectionRef, (snapshot) => {
@@ -190,7 +186,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
       this.crudError.set("Fallo al cargar catálogo. Verifique reglas de seguridad.");
     });
     this.unsubscribers.push(unsubscribeProducts);
-    
+
     // 2. Suscriptor de Clientes
     const clientsCollectionRef = collection(this.db, `artifacts/${this.appId}/public/data/clients`);
     const unsubscribeClients = onSnapshot(clientsCollectionRef, (snapshot) => {
@@ -198,7 +194,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
       snapshot.forEach(doc => {
         const data = doc.data();
         const lastLoginValue = data['lastLogin']?.toDate ? data['lastLogin'].toDate() : new Date();
-        
+
         newClients.push({
           id: doc.id,
           fullName: data['fullName'] || 'Cliente Nuevo',
@@ -218,9 +214,16 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   }
 
   // --- LÓGICA DE VISTA ---
-  selectView(view: 'catalogo' | 'clientes'): void {
+  // FIX: Incluimos 'reportes' en el tipo de vista
+  selectView(view: 'catalogo' | 'clientes' | 'reportes'): void {
     this.selectedView.set(view);
     this.crudError.set(null); // Limpiar errores al cambiar de vista
+  }
+
+  getViewTitle(): string {
+    if (this.selectedView() === 'catalogo') return 'Administración de Catálogo';
+    if (this.selectedView() === 'clientes') return 'Administración de Clientes';
+    return 'Analíticas y Reportes';
   }
 
   // --- DASHBOARD DE CATÁLOGO (COMPUTED SIGNALS) ---
@@ -236,7 +239,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   });
 
   // --- DASHBOARD DE CLIENTES (COMPUTED SIGNALS) ---
-  totalClients = computed(() => this.clients().length);
+  totalClients = computed(() => this.clients().length); // FIX: Elimina duplicidad
   activeClients = computed(() => this.clients().filter(c => c.status === 'Activo').length);
   inactiveClients = computed(() => this.clients().filter(c => c.status === 'Inactivo').length);
   pendingClients = computed(() => this.clients().filter(c => c.status === 'Pendiente').length);
@@ -271,7 +274,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     this.isSaving.set(true);
     const data = this.productForm.value;
     const productsCollectionRef = collection(this.db, `artifacts/${this.appId}/public/data/products`);
-    
+
     try {
       if (this.currentProductId()) {
         const productDocRef = doc(productsCollectionRef, this.currentProductId()!);
@@ -294,7 +297,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     if (!confirm('¿Está seguro de que desea eliminar este producto?')) return;
     this.crudError.set(null);
     this.isSaving.set(true);
-    
+
     try {
       const productDocRef = doc(this.db, `artifacts/${this.appId}/public/data/products`, id);
       await deleteDoc(productDocRef);
@@ -337,7 +340,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     this.isSaving.set(true);
     const data = this.clientForm.value;
     const clientsCollectionRef = collection(this.db, `artifacts/${this.appId}/public/data/clients`);
-    
+
     try {
       if (this.currentClientId()) {
         const clientDocRef = doc(clientsCollectionRef, this.currentClientId()!);
@@ -360,7 +363,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     if (!confirm('¿Está seguro de que desea eliminar este cliente y sus datos? (Esto NO elimina la cuenta de Firebase Auth)')) return;
     this.crudError.set(null);
     this.isSaving.set(true);
-    
+
     try {
       const clientDocRef = doc(this.db, `artifacts/${this.appId}/public/data/clients`, id);
       await deleteDoc(clientDocRef);

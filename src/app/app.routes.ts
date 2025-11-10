@@ -7,7 +7,7 @@ import { PromocionesComponent } from './components/promociones/promociones.compo
 import { SomosComponent } from './components/somos/somos.component';
 import { authGuard } from './guards/auth.guard';
 import { publicGuard } from './guards/public.guard';
-import { adminGuard } from './guards/admin.guard';
+import { adminGuard } from './guards/admin.guard';  
 
 export const routes: Routes = [
   {

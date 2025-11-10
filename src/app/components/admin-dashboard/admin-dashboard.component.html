@@ -30,29 +30,120 @@
         <nav class="w-64 bg-gray-800 text-white flex flex-col p-4 shadow-2xl sticky top-0 h-screen">
           <h2 class="text-3xl font-extrabold mb-10 border-b border-gray-700 pb-4 text-amber-400">Admin Panel</h2>
           <div class="space-y-4 flex-grow">
-            <button (click)="selectView('catalogo')" 
-                    [ngClass]="{'bg-indigo-600 shadow-md': selectedView() === 'catalogo', 'hover:bg-gray-700': selectedView() !== 'catalogo'}"
-                    class="w-full text-left p-3 rounded-lg transition duration-200 font-semibold">
-              🛍️ Catálogo
-            </button>
             <button (click)="selectView('clientes')" 
                     [ngClass]="{'bg-indigo-600 shadow-md': selectedView() === 'clientes', 'hover:bg-gray-700': selectedView() !== 'clientes'}"
                     class="w-full text-left p-3 rounded-lg transition duration-200 font-semibold">
               👥 Clientes
             </button>
+            <button (click)="selectView('catalogo')" 
+                    [ngClass]="{'bg-indigo-600 shadow-md': selectedView() === 'catalogo', 'hover:bg-gray-700': selectedView() !== 'catalogo'}"
+                    class="w-full text-left p-3 rounded-lg transition duration-200 font-semibold">
+              🛍️ Catálogo
+            </button>
+            <button (click)="selectView('reportes')" 
+                    [ngClass]="{'bg-indigo-600 shadow-md': selectedView() === 'reportes', 'hover:bg-gray-700': selectedView() !== 'reportes'}"
+                    class="w-full text-left p-3 rounded-lg transition duration-200 font-semibold">
+              📈 Reportes & Analíticas
+            </button>
           </div>
-          <div class="pt-4 mt-auto border-t border-gray-700 text-sm text-gray-400">
-            <p class="truncate">Sesión: {{ authService.currentUser()?.email }}</p>
-          </div>
+          <div class="pt-6 border-t border-gray-700">
+            <p class="text-sm text-gray-400 mb-2 truncate">Sesión: {{ authService.currentUser()?.email }}</p>
+            <button (click)="adminLogout()"
+                    class="w-full text-center p-3 bg-red-600 rounded-lg font-bold hover:bg-red-700 transition duration-200">
+              Cerrar Sesión
+            </button>
+        </div>
         </nav>
 
         <!-- Contenido Principal -->
-        <main class="flex-1 p-8 overflow-y-auto">
-          <h1 class="text-4xl font-extrabold text-gray-900 mb-8">{{ selectedView() === 'catalogo' ? 'Administración de Catálogo' : 'Administración de Clientes' }}</h1>
+        <main class="flex-1 p-8 overflow-y-auto bg-gray-100">
+          <h1 class="text-4xl font-extrabold text-gray-900 mb-8">{{ getViewTitle() }}</h1>
 
-          <!-- VISTA DE CATÁLOGO (CRUD y Dashboard) -->
-          <div *ngIf="selectedView() === 'catalogo'">
+          <!-- VISTA DE CLIENTES (CRUD - Tarea Prioritaria) -->
+          <div *ngIf="selectedView() === 'clientes'">
             <section class="mb-10">
+              <h2 class="text-2xl font-semibold text-indigo-700 mb-4 border-b pb-2">Dashboard de Clientes</h2>
+
+              <div *ngIf="clientsLoading()" class="p-4 bg-indigo-100 text-indigo-800 rounded-lg">Cargando estadísticas...</div>
+              <div *ngIf="!clientsLoading() && clients().length === 0" class="p-4 bg-yellow-100 text-yellow-800 rounded-lg">No hay datos de clientes.</div>
+
+              <div *ngIf="!clientsLoading() && clients().length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Tarjeta 1: Clientes Registrados -->
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-indigo-500 hover:shadow-xl transition">
+                  <p class="text-sm font-medium text-gray-500">Clientes Registrados</p>
+                  <p class="text-3xl font-bold text-gray-900 mt-1">{{ totalClients() }}</p>
+                </div>
+                <!-- Tarjeta 2: Clientes Activos -->
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-green-500 hover:shadow-xl transition">
+                  <p class="text-sm font-medium text-gray-500">Clientes Activos</p>
+                  <p class="text-3xl font-bold text-gray-900 mt-1">{{ activeClients() }}</p>
+                </div>
+                <!-- Tarjeta 3: Clientes Inactivos -->
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-red-500 hover:shadow-xl transition">
+                  <p class="text-sm font-medium text-gray-500">Clientes Inactivos</p>
+                  <p class="text-3xl font-bold text-gray-900 mt-1">{{ inactiveClients() }}</p>
+                </div>
+                <!-- Tarjeta 4: Clientes Pendientes -->
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-yellow-500 hover:shadow-xl transition">
+                  <p class="text-sm font-medium text-gray-500">Clientes Pendientes</p>
+                  <p class="text-3xl font-bold text-gray-900 mt-1">{{ pendingClients() }}</p>
+                </div>
+              </div>
+            </section>
+            
+            <!-- TABLA Y CRUD DE CLIENTES -->
+            <section>
+              <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold text-gray-700">Gestión de Clientes</h2>
+                <button (click)="openClientModal()"
+                        class="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700 transition duration-200 font-semibold">
+                  + Agregar Cliente
+                </button>
+              </div>
+
+              <div class="bg-white rounded-xl shadow-lg overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead class="bg-gray-100">
+                    <tr>
+                      <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Nombre Completo</th>
+                      <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Email</th>
+                      <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Estado</th>
+                      <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Último Login</th>
+                      <th class="px-6 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-200">
+                    <tr *ngFor="let client of clients()" class="hover:bg-indigo-50">
+                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ client.fullName }}</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ client.email }}</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold">
+                        <span [ngClass]="{
+                          'text-green-700 bg-green-200': client.status === 'Activo',
+                          'text-red-700 bg-red-200': client.status === 'Inactivo',
+                          'text-yellow-700 bg-yellow-200': client.status === 'Pendiente'
+                        }" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+                          {{ client.status }}
+                        </span>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ client.lastLogin | date:'short' }}</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium space-x-2">
+                        <button (click)="openClientModal(client)" class="text-indigo-600 hover:text-indigo-800 transition">Editar</button>
+                        <button (click)="deleteClient(client.id)" class="text-red-600 hover:text-red-800 transition">Eliminar</button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="clients().length === 0 && !clientsLoading()">
+                      <td colspan="5" class="px-6 py-4 text-center text-gray-500 italic">No hay clientes registrados.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+
+          <!-- VISTA DE CATÁLOGO (FUNCIONALIDAD YA IMPLEMENTADA) -->
+          <div *ngIf="selectedView() === 'catalogo'">
+             <!-- Se mantiene la funcionalidad de dashboard y CRUD de Catálogo -->
+             <section class="mb-10">
               <h2 class="text-2xl font-semibold text-indigo-700 mb-4 border-b pb-2">Dashboard de Catálogo</h2>
               
               <div *ngIf="productsLoading()" class="p-4 bg-indigo-100 text-indigo-800 rounded-lg">Cargando estadísticas...</div>
@@ -125,168 +216,96 @@
             </section>
           </div>
 
-          <!-- VISTA DE CLIENTES (CRUD y Dashboard) -->
-          <div *ngIf="selectedView() === 'clientes'">
-            <section class="mb-10">
-              <h2 class="text-2xl font-semibold text-indigo-700 mb-4 border-b pb-2">Dashboard de Clientes</h2>
-
-              <div *ngIf="clientsLoading()" class="p-4 bg-indigo-100 text-indigo-800 rounded-lg">Cargando estadísticas...</div>
-              <div *ngIf="!clientsLoading() && clients().length === 0" class="p-4 bg-yellow-100 text-yellow-800 rounded-lg">No hay datos de clientes.</div>
-
-              <div *ngIf="!clientsLoading() && clients().length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Tarjeta 1: Cantidad de Clientes -->
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-indigo-500 hover:shadow-xl transition">
-                  <p class="text-sm font-medium text-gray-500">Clientes Registrados</p>
-                  <p class="text-3xl font-bold text-gray-900 mt-1">{{ totalClients() }}</p>
+          <!-- VISTA DE REPORTES (Placeholder para desarrollo futuro) -->
+          <div *ngIf="selectedView() === 'reportes'">
+              <div class="p-8 bg-white rounded-xl shadow-xl border-l-4 border-green-600">
+                  <h2 class="text-2xl font-bold text-green-700 mb-4">Módulo de Reportes y Analíticas</h2>
+                  <p class="text-gray-600">Esta sección se utilizará para mostrar gráficos de ventas, inventario bajo y actividad del cliente.</p>
+                  <p class="mt-4 text-sm text-gray-500 italic">En desarrollo: Conexión a la base de datos de pedidos para generar estadísticas.</p>
+              </div>
+          </div>
+          
+        </main>
+        <!-- Modales (Product & Client) -->
+        <div *ngIf="showProductModal()" class="modal-overlay">
+          <div class="modal-content">
+            <h3 class="text-2xl font-bold mb-6 text-indigo-700">{{ currentProductId() ? 'Editar Producto' : 'Agregar Nuevo Producto' }}</h3>
+            <form [formGroup]="productForm" (ngSubmit)="saveProduct()">
+              <div class="grid grid-cols-2 gap-4">
+                <div class="col-span-2">
+                  <label for="productName" class="modal-label">Nombre</label>
+                  <input id="productName" formControlName="name" type="text" class="modal-input">
                 </div>
-                <!-- Tarjeta 2: Clientes Activos -->
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-green-500 hover:shadow-xl transition">
-                  <p class="text-sm font-medium text-gray-500">Clientes Activos</p>
-                  <p class="text-3xl font-bold text-gray-900 mt-1">{{ activeClients() }}</p>
+                <div>
+                  <label for="brand" class="modal-label">Marca</label>
+                  <input id="brand" formControlName="brand" type="text" class="modal-input">
                 </div>
-                <!-- Tarjeta 3: Clientes Inactivos -->
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-red-500 hover:shadow-xl transition">
-                  <p class="text-sm font-medium text-gray-500">Clientes Inactivos</p>
-                  <p class="text-3xl font-bold text-gray-900 mt-1">{{ inactiveClients() }}</p>
+                <div>
+                  <label for="category" class="modal-label">Categoría</label>
+                  <input id="category" formControlName="category" type="text" class="modal-input">
                 </div>
-                <!-- Tarjeta 4: Clientes Pendientes/Otros -->
-                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-yellow-500 hover:shadow-xl transition">
-                  <p class="text-sm font-medium text-gray-500">Clientes Pendientes</p>
-                  <p class="text-3xl font-bold text-gray-900 mt-1">{{ pendingClients() }}</p>
+                <div>
+                  <label for="stock" class="modal-label">Stock</label>
+                  <input id="stock" formControlName="stock" type="number" class="modal-input">
+                </div>
+                <div>
+                  <label for="price" class="modal-label">Precio ($)</label>
+                  <input id="price" formControlName="price" type="number" class="modal-input">
                 </div>
               </div>
-            </section>
-            
-            <!-- TABLA Y CRUD DE CLIENTES -->
-            <section>
-              <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-semibold text-gray-700">Gestión de Clientes</h2>
-                <button (click)="openClientModal()"
-                        class="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700 transition duration-200 font-semibold">
-                  + Agregar Cliente
+              
+              <div class="flex justify-end space-x-4 mt-8">
+                <button type="button" (click)="closeProductModal()" class="modal-button-cancel">
+                  Cancelar
+                </button>
+                <button type="submit" [disabled]="productForm.invalid || isSaving()"
+                        [ngClass]="{'opacity-50 cursor-not-allowed': productForm.invalid || isSaving()}"
+                        class="modal-button-primary">
+                  {{ isSaving() ? 'Guardando...' : 'Guardar Producto' }}
                 </button>
               </div>
-
-              <div class="bg-white rounded-xl shadow-lg overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                  <thead class="bg-gray-100">
-                    <tr>
-                      <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Nombre Completo</th>
-                      <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Email</th>
-                      <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Estado</th>
-                      <th class="px-6 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Último Login</th>
-                      <th class="px-6 py-3 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-gray-200">
-                    <tr *ngFor="let client of clients()">
-                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ client.fullName }}</td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ client.email }}</td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold">
-                        <span [ngClass]="{
-                          'text-green-700 bg-green-200': client.status === 'Activo',
-                          'text-red-700 bg-red-200': client.status === 'Inactivo',
-                          'text-yellow-700 bg-yellow-200': client.status === 'Pendiente'
-                        }" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
-                          {{ client.status }}
-                        </span>
-                      </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ client.lastLogin | date:'short' }}</td>
-                      <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium space-x-2">
-                        <button (click)="openClientModal(client)" class="text-indigo-600 hover:text-indigo-800 transition">Editar</button>
-                        <button (click)="deleteClient(client.id)" class="text-red-600 hover:text-red-800 transition">Eliminar</button>
-                      </td>
-                    </tr>
-                    <tr *ngIf="clients().length === 0 && !clientsLoading()">
-                      <td colspan="5" class="px-6 py-4 text-center text-gray-500 italic">No hay clientes registrados.</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </section>
+            </form>
+            <p *ngIf="crudError()" class="text-red-500 mt-4 text-sm">{{ crudError() }}</p>
           </div>
-        </main>
-      </div>
-      
-      <!-- Modales (Product & Client) -->
-      <!-- Las modales se han omitido del template para brevedad, pero la lógica de *ngIf/modal-overlay/modal-content* está en el CSS/TS -->
-      <div *ngIf="showProductModal()" class="modal-overlay">
-        <div class="modal-content">
-          <h3 class="text-2xl font-bold mb-6 text-indigo-700">{{ currentProductId() ? 'Editar Producto' : 'Agregar Nuevo Producto' }}</h3>
-          <form [formGroup]="productForm" (ngSubmit)="saveProduct()">
-            <div class="grid grid-cols-2 gap-4">
-              <div class="col-span-2">
-                <label for="productName" class="modal-label">Nombre</label>
-                <input id="productName" formControlName="name" type="text" class="modal-input">
+        </div>
+        
+        <div *ngIf="showClientModal()" class="modal-overlay">
+          <div class="modal-content">
+            <h3 class="text-2xl font-bold mb-6 text-indigo-700">{{ currentClientId() ? 'Editar Cliente' : 'Agregar Nuevo Cliente' }}</h3>
+            <form [formGroup]="clientForm" (ngSubmit)="saveClient()">
+              <div class="grid grid-cols-2 gap-4">
+                <div class="col-span-2">
+                  <label for="clientFullName" class="modal-label">Nombre Completo</label>
+                  <input id="clientFullName" formControlName="fullName" type="text" class="modal-input">
+                </div>
+                <div class="col-span-2">
+                  <label for="clientEmail" class="modal-label">Email</label>
+                  <input id="clientEmail" formControlName="email" type="email" class="modal-input">
+                </div>
+                <div class="col-span-2">
+                  <label for="clientStatus" class="modal-label">Estado</label>
+                  <select id="clientStatus" formControlName="status" class="modal-input">
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                    <option value="Pendiente">Pendiente</option>
+                  </select>
+                </div>
               </div>
-              <div>
-                <label for="brand" class="modal-label">Marca</label>
-                <input id="brand" formControlName="brand" type="text" class="modal-input">
+              
+              <div class="flex justify-end space-x-4 mt-8">
+                <button type="button" (click)="closeClientModal()" class="modal-button-cancel">
+                  Cancelar
+                </button>
+                <button type="submit" [disabled]="clientForm.invalid || isSaving()"
+                        [ngClass]="{'opacity-50 cursor-not-allowed': clientForm.invalid || isSaving()}"
+                        class="modal-button-primary">
+                  {{ isSaving() ? 'Guardando...' : 'Guardar Cliente' }}
+                </button>
               </div>
-              <div>
-                <label for="category" class="modal-label">Categoría</label>
-                <input id="category" formControlName="category" type="text" class="modal-input">
-              </div>
-              <div>
-                <label for="stock" class="modal-label">Stock</label>
-                <input id="stock" formControlName="stock" type="number" class="modal-input">
-              </div>
-              <div>
-                <label for="price" class="modal-label">Precio ($)</label>
-                <input id="price" formControlName="price" type="number" class="modal-input">
-              </div>
-            </div>
-            
-            <div class="flex justify-end space-x-4 mt-8">
-              <button type="button" (click)="closeProductModal()" class="modal-button-cancel">
-                Cancelar
-              </button>
-              <button type="submit" [disabled]="productForm.invalid || isSaving()"
-                      [ngClass]="{'opacity-50 cursor-not-allowed': productForm.invalid || isSaving()}"
-                      class="modal-button-primary">
-                {{ isSaving() ? 'Guardando...' : 'Guardar Producto' }}
-              </button>
-            </div>
-          </form>
-          <p *ngIf="crudError()" class="text-red-500 mt-4 text-sm">{{ crudError() }}</p>
+            </form>
+            <p *ngIf="crudError()" class="text-red-500 mt-4 text-sm">{{ crudError() }}</p>
+          </div>
         </div>
       </div>
       
-      <div *ngIf="showClientModal()" class="modal-overlay">
-        <div class="modal-content">
-          <h3 class="text-2xl font-bold mb-6 text-indigo-700">{{ currentClientId() ? 'Editar Cliente' : 'Agregar Nuevo Cliente' }}</h3>
-          <form [formGroup]="clientForm" (ngSubmit)="saveClient()">
-            <div class="grid grid-cols-2 gap-4">
-              <div class="col-span-2">
-                <label for="clientFullName" class="modal-label">Nombre Completo</label>
-                <input id="clientFullName" formControlName="fullName" type="text" class="modal-input">
-              </div>
-              <div class="col-span-2">
-                <label for="clientEmail" class="modal-label">Email</label>
-                <input id="clientEmail" formControlName="email" type="email" class="modal-input">
-              </div>
-              <div class="col-span-2">
-                <label for="clientStatus" class="modal-label">Estado</label>
-                <select id="clientStatus" formControlName="status" class="modal-input">
-                  <option value="Activo">Activo</option>
-                  <option value="Inactivo">Inactivo</option>
-                  <option value="Pendiente">Pendiente</option>
-                </select>
-              </div>
-            </div>
-            
-            <div class="flex justify-end space-x-4 mt-8">
-              <button type="button" (click)="closeClientModal()" class="modal-button-cancel">
-                Cancelar
-              </button>
-              <button type="submit" [disabled]="clientForm.invalid || isSaving()"
-                      [ngClass]="{'opacity-50 cursor-not-allowed': clientForm.invalid || isSaving()}"
-                      class="modal-button-primary">
-                {{ isSaving() ? 'Guardando...' : 'Guardar Cliente' }}
-              </button>
-            </div>
-          </form>
-          <p *ngIf="crudError()" class="text-red-500 mt-4 text-sm">{{ crudError() }}</p>
-        </div>
-      </div>
-    </div>
+      <app-footer></app-footer>
