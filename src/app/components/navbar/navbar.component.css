@@ -1,145 +1,108 @@
 /* 1. Reset y Layout */
-:host {
-  display: block;
-  /* Ajuste de padding-top para evitar que el contenido se oculte */
-  padding-top: 4.8rem;
-}
+    :host {
+      display: block;
+      padding-top: 4.8rem;
+    }
+    
+    .navbar {
+      background: linear-gradient(135deg, #030203 0%, #000000 100%); 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      position: fixed; 
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 2rem; 
+      min-height: 4rem; 
+    }
 
-.navbar {
-  background: linear-gradient(
-    135deg,
-    #030203 0%,
-    #000000 100%
-  ); /* Fondo Negro Gradient */
-  padding: 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
-}
+    /* 2. Logo y Título */
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none; 
+    }
 
-.nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.8rem 2rem;
-  min-height: 4rem;
-}
+    .logo-img {
+      width: 48px; 
+      height: 48px;
+      border-radius: 8px; 
+      object-fit: contain;
+      border: 2px solid #e67e22; 
+      padding: 2px;
+    }
 
-/* 2. Logo y Título */
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-}
+    .nav-logo h2 {
+      color: white;
+      margin: 0;
+      font-size: 1.3rem; 
+      font-weight: 800;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+      letter-spacing: 0.5px;
+    }
 
-.logo-img {
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
-  object-fit: contain;
-  border: 2px solid #e67e22;
-  padding: 2px;
-}
+    /* 3. Menú Principal y Contenedor de Auth */
+    .nav-menu {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center; /* Alinea los enlaces y el auth-section verticalmente */
+    }
 
-.nav-logo h2 {
-  color: white;
-  margin: 0;
-  font-size: 1.3rem;
-  font-weight: 800;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  letter-spacing: 0.5px;
-}
+    /* CORRECCIÓN CLAVE: Contenedor para alinear saludo y botón */
+    .auth-section {
+      display: flex;
+      flex-direction: row; /* Mantener horizontalmente con el menú */
+      align-items: center; /* Alinear verticalmente el saludo y el botón */
+      gap: 0.5rem; /* Espacio horizontal */
+      margin-left: 1rem;
+    }
 
-/* 3. Menú Principal y Contenedor de Auth */
-.nav-menu {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-}
+    /* Ajuste: Si está logueado, el saludo debe estar al lado del botón, no debajo */
+    .auth-section > span { /* Se dirige a la etiqueta del saludo */
+      order: 1; /* Posición 1 */
+      padding: 0.5rem 0;
+    }
+    
+    .auth-section > button, .auth-section > a:last-child { 
+      order: 2; /* Posición 2 */
+    }
 
-.auth-section {
-  display: flex;
-  flex-direction: column; /* Apila Saludo encima del Botón */
-  align-items: flex-end; /* Alinea el contenido a la derecha */
-  gap: 0.3rem; /* Espacio vertical reducido entre saludo y botón */
-  margin-left: 1rem; /* Margen para separarlo de los enlaces */
-  min-width: 180px; /* Asegura un espacio mínimo */
-}
+    .auth-greeting {
+      /* Estilos para el saludo */
+      color: #FFC300; 
+      font-size: 0.9rem; /* Ligeramente más grande para centrarse con el texto del botón */
+      font-weight: 600;
+      white-space: nowrap;
+    }
 
-.auth-greeting {
-  /* CORRECCIÓN DE CONTRASTE Y FUENTE */
-  color: #ffc300; /* Amarillo/Dorado vibrante para alto contraste */
-  font-size: 0.85rem; /* Fuente ligeramente más pequeña */
-  font-weight: 600;
-  white-space: nowrap;
-  padding: 0 0.2rem; /* Pequeño padding para visualización */
-}
+    /* 4. Estilos de Enlaces y Botones (Mantenidos) */
+    .nav-link {
+      color: white; text-decoration: none; font-weight: 600; padding: 0.4rem 1.0rem; border-radius: 20px;
+      transition: all 0.3s ease; font-size: 0.9rem; position: relative; overflow: hidden;
+      cursor: pointer; display: inline-flex; align-items: center; white-space: nowrap;
+    }
+    
+    .nav-link:hover { background-color: #e67e22; color: white; transform: translateY(-1px); box-shadow: 0 3px 8px rgba(230, 126, 34, 0.4); }
+    .nav-link::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: white; transition: all 0.3s ease; transform: translateX(-50%); }
+    .nav-link:hover::after, .nav-link.active-link::after { width: 80%; }
+    .nav-link.active-link { color: #e67e22; }
 
-/* 4. Enlaces Comunes y Botones */
-.nav-link {
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  /* CORRECCIÓN DE PADDING/TAMAÑO */
-  padding: 0.4rem 1rem;
-  border-radius: 20px; /* Bordes más suaves */
-  transition: all 0.3s ease;
-  font-size: 0.9rem; /* Fuente ligeramente más pequeña para mejor ajuste */
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
-}
+    /* 5. Estilo Especial para Botones de Auth (Dual) */
+    .last-child-style {
+      background-color: #e67e22; border: 2px solid #e67e22; color: white !important;
+      padding: 0.5rem 1.2rem; 
+      font-weight: 700;
+    }
 
-.nav-link:hover {
-  background-color: #e67e22;
-  color: white;
-  transform: translateY(-1px); /* Suaviza la traslación */
-  box-shadow: 0 3px 8px rgba(230, 126, 34, 0.4);
-}
-
-/* Línea decorativa al hover */
-.nav-link::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 2px;
-  background: white;
-  transition: all 0.3s ease;
-  transform: translateX(-50%);
-}
-
-.nav-link:hover::after,
-.nav-link.active-link::after {
-  width: 80%;
-}
-
-/* Estilo para el enlace activo (routerLinkActive) */
-.nav-link.active-link {
-  color: #e67e22;
-}
-
-/* 5. Estilo Especial para Botones de Auth */
-.last-child-style {
-  background-color: #e67e22;
-  border: 2px solid #e67e22;
-  color: white !important;
-  padding: 0.5rem 1.2rem; /* Padding específico para botones destacados */
-  font-weight: 700;
-}
-
-.last-child-style:hover {
-  background-color: transparent;
-  border-color: white;
-  color: white !important;
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
-}
+    .last-child-style:hover {
+      background-color: transparent; border-color: white; color: white !important;
+      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+    }

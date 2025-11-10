@@ -1,9 +1,9 @@
 <div class="login-container">
   <div class="form-card">
-    <h2 class="text-4xl font-extrabold title-font text-center mb-8">
+    <h2>
       Bienvenido
     </h2>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)" class="space-y-6">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)" class="">
       
       <div>
         <label for="email" class="label-style">Email</label>
@@ -17,7 +17,7 @@
           [ngClass]="{'border-red-500': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
         >
         @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
-          <p class="mt-2 text-sm text-red-600">Email inválido o requerido.</p>
+          <p class="error-message">Email inválido o requerido.</p>
         }
       </div>
 
@@ -33,7 +33,7 @@
           [ngClass]="{'border-red-500': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
         >
         @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-          <p class="mt-2 text-sm text-red-600">Contraseña requerida (mín. 6 caracteres).</p>
+          <p class="error-message">Contraseña requerida (mín. 6 caracteres).</p>
         }
       </div>
 
@@ -52,7 +52,7 @@
       </div>
     </form>
 
-    <p class="mt-8 text-center text-sm text-gray-500">
+    <p class="">
       ¿No tienes una cuenta? 
       <a routerLink="/registrate" class="font-bold text-indigo-500 hover:text-indigo-400 transition duration-200">
         Regístrate aquí
